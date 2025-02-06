@@ -49,6 +49,8 @@ router.beforeEach((to,from,next)=>{
       next({name:'login'})
     }else if(requiresAuth && user && !user.emailVerified){//si requiere autenticacion, hay user, pero no verificacion
       next({name:'login'})
+    }else if(!requiresAuth && user && user.emailVerified && (to.path=='/login' || to.path=='/register')){
+      next({name:'perfil'})
     }else{
       next()
     }

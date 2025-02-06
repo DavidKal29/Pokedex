@@ -2,7 +2,7 @@
   <router-view/>
 </template>
 
-<script>
+<!-- <script>
 import { auth } from './db/firebase.js'
   export default{
     mounted(){
@@ -15,4 +15,4 @@ import { auth } from './db/firebase.js'
       })
     }
   }
-</script>
+</script> -->

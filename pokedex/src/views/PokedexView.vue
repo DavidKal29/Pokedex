@@ -46,6 +46,7 @@ export default {
                 this.$router.push('/login')
             }else{
                 alert('Estas logueado')
+                this.$router.push('/perfil')
             }
             
         }
