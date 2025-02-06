@@ -7,7 +7,7 @@
         <button @click="buscar(this.pokemon)">Buscar</button>
     </div>
 
-    <div v-if="obtenerPokemon">
+    <div v-if="obtenerPokemon.name">
         <img :src="obtenerPokemon.image" alt="">
         <h1>{{ obtenerPokemon.name }}</h1>
         <h1>{{ obtenerPokemon.stats }}</h1>
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import {auth} from '../db/firebase.js'
 import { mapGetters, mapActions } from 'vuex'
 export default {
     name:'PokedexView',
@@ -40,6 +41,12 @@ export default {
         },
         añadirFavoritos(pokemon){
             console.log('El pokemon en cuestion:',pokemon);
+            if (!auth.currentUser) {
+                alert('No estas logueado')
+                this.$router.push('/login')
+            }else{
+                alert('Estas logueado')
+            }
             
         }
     },
