@@ -28,7 +28,31 @@ export default createStore({
     async buscarPokemon({commit},nombre){
       try {
         let data=await fetch(`https://pokeapi.co/api/v2/pokemon/${nombre}`)
-        let pokemon=await data.json()
+        data=await data.json()
+
+        let pokemon={
+          name:data.name,
+          image:data.sprites.front_default,
+          types:[],
+          stats:[],
+          abilities:[]
+        }
+
+        data.types.forEach(t => {
+          let type_name=t.type.name
+          pokemon.types.push(type_name)
+        });
+
+        data.stats.forEach(s => {
+          let stat_name=s.stat.name
+          pokemon.stats.push(stat_name)
+        });
+
+        data.abilities.forEach(a => {
+          let ability_name=a.ability.name
+          pokemon.abilities.push(ability_name)
+        });
+
         commit.SET_POKEMON(pokemon)
         alert('Pokemon encontrado')
       } catch (error) {
