@@ -34,6 +34,7 @@ export default {
                     alert('Estas logueado, pero estas sin verificar')
                 }else{
                     alert('Estas logueado y verificado')
+                    this.$router.push('/perfil')
                 }
             } catch (error) {
                 alert(error.message)

@@ -32,6 +32,7 @@ export default {
             const userCredentials=await createUserWithEmailAndPassword(auth,this.email,this.password) 
             sendEmailVerification(userCredentials.user)
             alert('Registrado correctamente')
+            this.$router.push('/login')
            } catch (error) {
             alert(error.message)
            }
