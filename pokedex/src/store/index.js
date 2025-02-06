@@ -30,6 +30,9 @@ export default createStore({
         let data=await fetch(`https://pokeapi.co/api/v2/pokemon/${nombre}`)
         data=await data.json()
 
+        console.log(data);
+        
+
         let pokemon={
           name:data.name,
           image:data.sprites.front_default,
@@ -53,7 +56,10 @@ export default createStore({
           pokemon.abilities.push(ability_name)
         });
 
-        commit.SET_POKEMON(pokemon)
+        console.log(pokemon);
+        
+
+        commit('SET_POKEMON',pokemon)
         alert('Pokemon encontrado')
       } catch (error) {
         alert(error.message)
@@ -61,14 +67,14 @@ export default createStore({
     },
     anadirFavoritos({commit},pokemon){
       try {
-        commit.PUSH_FAVORITOS(pokemon)
+        commit('PUSH_FAVORITOS',pokemon)
         alert('Añadido a favoritos')
       } catch (error) {
         alert(error.message)
       }
     },
     setearFavoritos({commit},favoritos){
-      commit.SET_FAVORITOS(favoritos)
+      commit('SET_FAVORITOS',favoritos)
       alert('Setteados los favoritos a 0')
     }
 
