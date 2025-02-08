@@ -15,6 +15,11 @@
         <h1>{{ obtenerPokemon.types }}</h1>
         <button @click="agregarFavoritos(obtenerPokemon)">Añadir a favoritos</button>
     </div>
+
+    <button @click="perfil">Perfil</button>
+
+
+    
   </section>
 </template>
 
@@ -33,9 +38,6 @@ export default {
         ...mapGetters(['GET_POKEMON','GET_FAVORITOS']),
         obtenerPokemon(){
             return this.GET_POKEMON
-        },
-        obtenerFavoritos(){
-            return this.GET_FAVORITOS
         }
     },
     methods:{
@@ -54,11 +56,16 @@ export default {
                 await this.anadirFavoritos(pokemon)
                 
             }
+        },
+        perfil(){
+            if (!auth.currentUser) {
+                alert('No estas logueado')
+                this.$router.push('/login')
+                return 
+            }else{
+                this.$router.push('/perfil')
+            }
         }
-    },
-    mounted(){
-        
-        
     }
 }
 </script>

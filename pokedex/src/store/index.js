@@ -9,7 +9,7 @@ export default createStore({
     favoritos:[]
   },
   getters: {
-    GET_FAVORITOS(state){
+     GET_FAVORITOS(state){
       return state.favoritos
     },
     GET_POKEMON(state){
@@ -79,15 +79,30 @@ export default createStore({
           let pokemons=data.pokemons || []
           alert('Se creo el array pokemons')
 
-          await setDoc(docRef,{
-            pokemons:[...pokemons,pokemon]
-          })
-          alert('Se settearon correctamente los datos')
+          alert('Viendo si el pokemon está duplicado...')
+          let repe=false
+          pokemons.forEach(p => {
+            if (p.name==pokemon.name) {
+              repe=true
+            }
+          });
+          
+          if (!repe) {
+            alert('El pokemon no es repe,ok, procediendo')
 
-          docSnap=await getDoc(docRef)
+            await setDoc(docRef,{
+              pokemons:[...pokemons,pokemon]
+            })
+            alert('Se settearon correctamente los datos')
 
-          commit('SET_FAVORITOS',docSnap)
-          alert('Se settearon los favoritos')
+            docSnap=await getDoc(docRef)
+
+            commit('SET_FAVORITOS',docSnap.data().pokemons)
+            alert('Se settearon los favoritos')
+          }else{
+            alert('No admitimos repetidos, sorry')
+          }
+          
         }else{
           alert('El documento no existe')
           await setDoc(docRef,{
@@ -97,12 +112,18 @@ export default createStore({
 
           docSnap=await getDoc(docRef)
 
-          commit('SET_FAVORITOS',docSnap)
+          commit('SET_FAVORITOS',docSnap.data().pokemons)
           alert('Se settearon los favoritos')
         }
       } catch (error) {
         alert(error.message)
       }
+    },
+    async setearFavoritos({commit}){
+      let docRef=doc(db,'favoritos',auth.currentUser.uid)
+      let docSnap=await getDoc(docRef)
+
+      commit('SET_FAVORITOS',docSnap.data().pokemons)
     }
   },
   modules: {

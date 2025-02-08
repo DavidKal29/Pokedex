@@ -1,6 +1,6 @@
 <template>
   <section class="">
-    <h1>Bienvenido a la pokedex</h1>
+    <img src="https://pipedream.com/s.v0/app_mvNhzR/logo/orig" alt="">
     <button><router-link to="/pokedex">Comenzar</router-link></button>
   </section>
 </template>
