@@ -18,6 +18,7 @@
 <script>
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../db/firebase.js'
+
 export default {
     name:'LoginView',
     data(){
@@ -41,7 +42,7 @@ export default {
             }
 
         }
-    }
+    },
 }
 </script>
 

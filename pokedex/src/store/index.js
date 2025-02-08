@@ -1,4 +1,7 @@
 import { createStore } from 'vuex'
+import { auth,db } from '@/db/firebase'
+import { doc,getDoc,setDoc } from 'firebase/firestore'
+////////////////////////////////////////////////////////////////
 
 export default createStore({
   state: {
@@ -17,11 +20,8 @@ export default createStore({
     SET_POKEMON(state,pokemon){
       state.pokemon=pokemon
     },
-    PUSH_FAVORITOS(state,pokemon){
-      state.favoritos.push(pokemon)
-    },
-    SET_FAVORITOS(state,favoritos){
-      state.favoritos=favoritos
+    SET_FAVORITOS(state,nueva_lista){
+      state.favoritos=nueva_lista
     }
   },
   actions: {
@@ -65,19 +65,45 @@ export default createStore({
         alert(error.message)
       }
     },
-    anadirFavoritos({commit},pokemon){
+    async anadirFavoritos({commit},pokemon){
       try {
-        commit('PUSH_FAVORITOS',pokemon)
-        alert('Añadido a favoritos')
+        alert('Vamos a proceder con nombrar el docref')
+        let docRef=doc(db,'favoritos',auth.currentUser.uid)
+        alert('Doc ref creado')
+        let docSnap=await getDoc(docRef)
+        alert('Doc snap encontrado')
+
+        if (docSnap.exists()) {
+          alert('El documento existe')
+          let data=docSnap.data()
+          let pokemons=data.pokemons || []
+          alert('Se creo el array pokemons')
+
+          await setDoc(docRef,{
+            pokemons:[...pokemons,pokemon]
+          })
+          alert('Se settearon correctamente los datos')
+
+          docSnap=await getDoc(docRef)
+
+          commit('SET_FAVORITOS',docSnap)
+          alert('Se settearon los favoritos')
+        }else{
+          alert('El documento no existe')
+          await setDoc(docRef,{
+            pokemons:[pokemon]
+          })
+          alert('Creamos la lista de favoritos')
+
+          docSnap=await getDoc(docRef)
+
+          commit('SET_FAVORITOS',docSnap)
+          alert('Se settearon los favoritos')
+        }
       } catch (error) {
         alert(error.message)
       }
-    },
-    setearFavoritos({commit},favoritos){
-      commit('SET_FAVORITOS',favoritos)
-      alert('Setteados los favoritos a 0')
     }
-
   },
   modules: {
   }

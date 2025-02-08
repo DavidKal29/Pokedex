@@ -13,7 +13,7 @@
         <h1>{{ obtenerPokemon.stats }}</h1>
         <h1>{{ obtenerPokemon.abilities }}</h1>
         <h1>{{ obtenerPokemon.types }}</h1>
-        <button @click="añadirFavoritos(obtenerPokemon)">Añadir a favoritos</button>
+        <button @click="agregarFavoritos(obtenerPokemon)">Añadir a favoritos</button>
     </div>
   </section>
 </template>
@@ -25,30 +25,35 @@ export default {
     name:'PokedexView',
     data(){
         return {
-            pokemon:''
+            pokemon:'',
+            favoritos:[]
         }
     },
     computed:{
-        ...mapGetters(['GET_POKEMON']),
+        ...mapGetters(['GET_POKEMON','GET_FAVORITOS']),
         obtenerPokemon(){
             return this.GET_POKEMON
+        },
+        obtenerFavoritos(){
+            return this.GET_FAVORITOS
         }
     },
     methods:{
-        ...mapActions(['buscarPokemon']),
+        ...mapActions(['buscarPokemon','anadirFavoritos']),
         buscar(nombre){
             this.buscarPokemon(nombre)
         },
-        añadirFavoritos(pokemon){
+        async agregarFavoritos(pokemon){
             console.log('El pokemon en cuestion:',pokemon);
             if (!auth.currentUser) {
                 alert('No estas logueado')
                 this.$router.push('/login')
+                return 
             }else{
                 alert('Estas logueado')
-                this.$router.push('/perfil')
+                await this.anadirFavoritos(pokemon)
+                
             }
-            
         }
     },
     mounted(){
