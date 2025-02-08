@@ -1,28 +1,28 @@
 <template>
-  <section>
-    <h1>Bienvenido a tu perfil</h1>
-    <span>Aqui verás a todos los pokemon que añadas a favoritos</span>
-    <div v-if="obtenerPokemons">
-      <div v-for="(pokemon,index) in obtenerPokemons" :key="index">
-        <img :src="pokemon.image" alt="">
-        <h2>{{ pokemon.name }}</h2>
-        <h3>Tipos</h3>
-        <ul>
-          <li v-for="(tipo,index) in pokemon.types" :key="index">{{ tipo }}</li>
-        </ul>
-        <h3>Habilidades</h3>
-        <ul>
-          <li v-for="(habilidad,index) in pokemon.abilities" :key="index">{{ habilidad }}</li>
-        </ul>
+  <section class="p-[15px] flex flex-col justify-start items-center h-full bg-blue-700 gap-[20px]">
+    <img src="https://pipedream.com/s.v0/app_mvNhzR/logo/orig" alt="">
+    <div v-if="obtenerPokemons" class="flex flex-col justify-center items-center gap-[20px]">
+      <div class="p-[20px] flex flex-col justify-center items-center bg-white rounded w-[40vh] h-[50vh] gap-[1px]" v-for="(obtenerPokemon,index) in obtenerPokemons" :key="index">
+        <img class="w-[40%]" :src="obtenerPokemon.image" alt="">
+        <div class="flex flex-col justify-center items-center gap-[10px]">
+            <h1 class="font-bold text-blue-500 text-[25px]">{{ obtenerPokemon.name }}</h1>
+            <ul class="flex justify-center items-center gap-[5px]">
+                <li class="rounded text-white font-bold py-[5px] px-[10px]" :style="{'backgroundColor':colores[tipo]}" v-for="(tipo,index) in obtenerPokemon.types" :key="index">{{ tipo }}</li>
+            </ul>
+            <h3 class="font-bold text-blue-600 text-[20px] ">Habilidades</h3>
+            <ul class="flex justify-center items-center gap-[5px]">
+                <li class="text-yellow-500 tex-[18px] font-bold " v-for="(habilidad,index) in obtenerPokemon.abilities" :key="index">{{ habilidad }}</li>
+            </ul>
+        </div>
+    </div>
 
-      </div>
     </div>
 
     <div v-else>
       <h1>No has añadido ningun pokemon</h1>
     </div>
 
-    <button @click="pokedex">Pokedex</button>
+    <button class="rounded bg-blue-500 text-yellow-300 font-bold py-[8px] px-[16px]" @click="pokedex">Pokedex</button>
   </section>
 </template>
 
@@ -32,7 +32,26 @@ export default {
     name:'PerfilView',
     data(){
       return {
-        
+        colores:{
+                normal: '#A8A77A',
+                fire: '#EE8130',
+                water: '#6390F0',
+                electric: '#F7D02C',
+                grass: '#7AC74C',
+                ice: '#96D9D6',
+                fighting: '#C22E28',
+                poison: '#A33FAA',
+                ground: '#E2BF65',
+                flying: '#A98FF3',
+                psychic: '#F95587',
+                bug: '#A6B91A',
+                rock: '#B6A136',
+                ghost: '#735797',
+                dragon: '#6F35FC',
+                dark: '#705746',
+                steel: '#B7B7CE',
+                fairy: '#D685AD'
+            }
       }
     },
     computed:{

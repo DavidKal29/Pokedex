@@ -1,5 +1,5 @@
 <template>
-  <section class=" p-[20px] flex flex-col justify-content items-center h-[115vh] bg-blue-700 gap-[20px]">
+  <section class=" p-[20px] flex flex-col justify-start items-center h-[115vh] bg-blue-700 gap-[20px]">
     <img src="https://pipedream.com/s.v0/app_mvNhzR/logo/orig" alt="">
 
     <div class="flex justify-center items-center gap-[10px]">
